@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nike - Just Do It</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <!-- Three.js and GLTFLoader for 3D model rendering -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <!-- OrbitControls for interactive camera control -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body class="relative">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-12">
+                <a href="#" class="text-3xl font-bold title-font">NIKE</a>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="nav-link relative">Men</a>
+                    <a href="#" class="nav-link relative">Women</a>
+                    <a href="#" class="nav-link relative">Kids</a>
+                    <a href="#" class="nav-link relative">Sale</a>
+                    <a href="#" class="nav-link relative">New Releases</a>
+                </div>
+            </div>
+            <div class="flex items-center space-x-6">
+                <button class="text-gray-800 hover:text-gray-600">
+                    <i class="fas fa-search text-xl"></i>
+                </button>
+                <button class="text-gray-800 hover:text-gray-600">
+                    <i class="fas fa-shopping-bag text-xl"></i>
+                </button>
+                <button class="md:hidden text-gray-800">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero flex items-center justify-center pt-16 relative">
+        <!-- Canvas for 3D sneaker model - now absolute and in the background -->
+        <canvas id="sneakerCanvas" class="absolute inset-0 w-full h-full z-0"></canvas>
+        <!-- Loading indicator for the 3D model, also positioned over the hero -->
+        <div id="loadingIndicator" class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 rounded-lg text-black font-bold z-10">
+            Loading 3D Model...
+        </div>
+
+        <!-- Hero content - now positioned relatively with a higher z-index to appear above the canvas -->
+        <div class="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between hero-content relative z-20">
+            <div class="md:w-1/2 mb-12 md:mb-0">
+                <h1 class="text-6xl md:text-8xl font-bold title-font mb-4">AIR MAX 270</h1>
+                <p class="text-2xl mb-8">Biggest Air unit yet for unbelievable comfort.</p>
+                <div class="flex items-center space-x-6">
+                    <button class="bg-black text-white px-8 py-3 rounded-full font-bold hover:bg-gray-800 transition">
+                        Shop Now
+                    </button>
+                    <button class="border-2 border-black px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition">
+                        Explore
+                    </button>
+                </div>
+            </div>
+            <!-- Removed the old sneaker-container div as canvas is now directly in hero -->
+            <div class="md:w-1/2 flex justify-center">
+                <!-- This div is kept to maintain the layout structure, but the canvas is outside it now -->
+            </div>
+        </div>
+        <!-- Scroll indicator, also with a higher z-index -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-20">
+            <p class="mb-4">Scroll Down</p>
+            <div class="scroll-indicator"></div>
+        </div>
+    </section>
+
+    <!-- Just Do It Banner -->
+    <section class="py-16 bg-black text-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-6xl md:text-8xl font-bold title-font mb-4">JUST DO IT.</h2>
+            <p class="text-xl md:text-2xl max-w-3xl mx-auto">Push your limits. Break boundaries. Whatever your goal, whatever your sport—get after it.</p>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="py-20">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold title-font mb-12 text-center">FEATURED</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Product 1 -->
+                <div class="product-card group">
+                    <div class="overflow-hidden mb-4">
+                        <div class="product-image bg-gray-100 rounded-lg p-8 transition duration-500">
+                            <img src="https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/skwgyqrbfzhu6uyeh0gg/air-max-270-mens-shoes-KkLcGR.png" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/333333?text=Image+Not+Found';" alt="Nike Air Max 270" class="w-full h-64 object-contain">
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold">Nike Air Max 270</h3>
+                    <p class="text-gray-600 mb-2">Men's Shoes</p>
+                    <p class="font-bold">$160</p>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card group">
+                    <div class="overflow-hidden mb-4">
+                        <div class="product-image bg-gray-100 rounded-lg p-8 transition duration-500">
+                            <img src="https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/afc0eb15-8b8f-4b1b-9a4e-6a4d0e5a8f1d/air-jordan-1-mid-se-mens-shoes-5hJWtz.png" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/333333?text=Image+Not+Found';" alt="Nike Air Jordan 1 Mid SE" class="w-full h-64 object-contain">
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold">Air Jordan 1 Mid SE</h3>
+                    <p class="text-gray-600 mb-2">Men's Shoes</p>
+                    <p class="font-bold">$135</p>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card group">
+                    <div class="overflow-hidden mb-4">
+                        <div class="product-image bg-gray-100 rounded-lg p-8 transition duration-500">
+                            <img src="https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/1b1a0c3e-3c3d-4b3e-9b3e-3c3d4b3e9b3e/air-force-1-07-womens-shoes-5hJWtz.png" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/333333?text=Image+Not+Found';" alt="Nike Air Force 1 '07" class="w-full h-64 object-contain">
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold">Nike Air Force 1 '07</h3>
+                    <p class="text-gray-600 mb-2">Women's Shoes</p>
+                    <p class="font-bold">$110</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Releases -->
+    <section class="py-20 bg-gray-100">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold title-font mb-12 text-center">NEW RELEASES</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg">
+                    <div class="h-64 bg-red-100 flex items-center justify-center">
+                        <img src="https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/1b1a0c3e-3c3d-4b3e-9b3e-3c3d4b3e9b3e/air-max-90-mens-shoes-5hJWtz.png" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/333333?text=Image+Not+Found';" alt="Nike Air Max 90" class="h-full object-contain">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-sm text-red-600 font-bold">NEW</span>
+                        <h3 class="text-2xl font-bold mt-2">Nike Air Max 90</h3>
+                        <p class="text-gray-600 my-4">The iconic Air Max 90 stays true to its roots with the same Waffle outsole, stitched overlays and classic TPU accents.</p>
+                        <button class="bg-black text-white px-6 py-2 rounded-full font-bold hover:bg-gray-800 transition">
+                            Shop Now
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg">
+                    <div class="h-64 bg-blue-100 flex items-center justify-center">
+                        <img src="https://static.nike.com/a/images/t_PDP_1280_v1/f_auto,q_auto:eco/1b1a0c3e-3c3d-4b3e-9b3e-3c3d4b3e9b3e/air-max-95-mens-shoes-5hJWtz.png" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/333333?text=Image+Not+Found';" alt="Nike Air Max 95" class="h-full object-contain">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-sm text-red-600 font-bold">NEW</span>
+                        <h3 class="text-2xl font-bold mt-2">Nike Air Max 95</h3>
+                        <p class="text-gray-600 my-4">The Nike Air Max 95 combines sleek lines with comfortable cushioning, inspired by the human body.</p>
+                        <button class="bg-black text-white px-6 py-2 rounded-full font-bold hover:bg-gray-800 transition">
+                            Shop Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Story -->
+    <section class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-12 md:mb-0 md:pr-12">
+                    <h2 class="text-4xl font-bold title-font mb-6">OUR STORY</h2>
+                    <p class="text-lg mb-6">Nike, Inc. is an American multinational corporation that is engaged in the design, development, manufacturing, and worldwide marketing and sales of footwear, apparel, equipment, accessories, and services.</p>
+                    <p class="text-lg mb-6">The company was founded on January 25, 1964, as "Blue Ribbon Sports", by Bill Bowerman and Phil Knight, and officially became Nike, Inc. on May 30, 1971.</p>
+                    <p class="text-lg mb-8">Nike is named after the Greek goddess of victory, and the company's iconic "Swoosh" logo represents the wing of the goddess.</p>
+                    <button class="border-2 border-black px-8 py-3 rounded-full font-bold hover:bg-gray-100 transition">
+                        Learn More
+                    </button>
+                </div>
+                <div class="md:w-1/2">
+                    <div class="bg-gray-100 rounded-xl p-8">
+                        <img src="https://static.nike.com/a/images/f_auto/dpr_1.0,cs_srgb/w_1920,c_limit/9f1c0a3e-4d7e-4c1a-9b0a-9b9b0a9b0a9b/nike-history.jpg" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/333333?text=Image+Not+Found';" alt="Nike History" class="w-full rounded-lg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold title-font mb-4">NIKE</h3>
+                    <p class="text-gray-400">Bring inspiration and innovation to every athlete in the world.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Products</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Shoes</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Clothing</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Accessories</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">New Releases</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Customer Service</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Returns</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Shipping</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Order Status</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Connect With Us</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <p class="text-gray-400">© 2023 Nike, Inc. All Rights Reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
