@@ -7,7 +7,7 @@
     --nike-gray: #f5f5f5;
 }
 .product-image img {
-    background: transparent;
+   /* background: transparent;*/
     mix-blend-mode: multiply;
 }
 
