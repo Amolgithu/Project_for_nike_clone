@@ -6,10 +6,6 @@
     --nike-red: #e60023;
     --nike-gray: #f5f5f5;
 }
-.product-image img {
-   /* background: transparent;*/
-    mix-blend-mode: multiply;
-}
 
 
 body {
